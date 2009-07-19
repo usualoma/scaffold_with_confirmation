@@ -1,0 +1,27 @@
+ScaffoldWithConfirmation
+========================
+Extended version of scaffolds.
+This scaffold has a confirmation page.
+
+
+Usage
+=====
+
+1. Install plugin.
+
+  ruby script/plugin install git://github.com/usualoma/scaffold_with_confirmation.git
+
+2. Generate model.
+
+  ruby script/generate ModelName [ field ... ]
+
+
+Example
+=======
+
+  ruby script/generate scaffold post
+  ruby script/generate scaffold post title:string body:text published:boolean
+  ruby script/generate scaffold purchase order_id:integer amount:decimal
+
+
+Copyright (c) 2009 ToI Planning, released under the MIT license
