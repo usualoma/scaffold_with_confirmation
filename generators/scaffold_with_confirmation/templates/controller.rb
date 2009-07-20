@@ -1,134 +1,134 @@
 class <%= controller_class_name %>Controller < ApplicationController
   helper ScaffoldWithConfirmationHelper
 
-  # GET /<%= table_name %>
-  # GET /<%= table_name %>.xml
+  # GET /<%= plural_path %>
+  # GET /<%= plural_path %>.xml
   def index
-    @<%= table_name %> = <%= class_name %>.all
+    @<%= plural_name %> = <%= class_name %>.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @<%= table_name %> }
+      format.xml  { render :xml => @<%= plural_name %> }
     end
   end
 
-  # GET /<%= table_name %>/1
-  # GET /<%= table_name %>/1.xml
+  # GET /<%= plural_path %>/1
+  # GET /<%= plural_path %>/1.xml
   def show
-    @<%= file_name %> = <%= class_name %>.find(params[:id])
+    @<%= singular_name %> = <%= class_name %>.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @<%= file_name %> }
+      format.xml  { render :xml => @<%= singular_name %> }
     end
   end
 
-  # GET /<%= table_name %>/new
-  # GET /<%= table_name %>/new.xml
+  # GET /<%= plural_path %>/new
+  # GET /<%= plural_path %>/new.xml
   def new
-    @<%= file_name %> = <%= class_name %>.new
+    @<%= singular_name %> = <%= class_name %>.new
 
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @<%= file_name %> }
+      format.xml  { render :xml => @<%= singular_name %> }
     end
   end
 
-  # GET /<%= table_name %>/1/edit
+  # GET /<%= plural_path %>/1/edit
   def edit
-    @<%= file_name %> = <%= class_name %>.find(params[:id])
+    @<%= singular_name %> = <%= class_name %>.find(params[:id])
   end
 
-  # POST /<%= table_name %>/create_confirm
-  # POST /<%= table_name %>/create_condirm.xml
+  # POST /<%= plural_path %>/create_confirm
+  # POST /<%= plural_path %>/create_condirm.xml
   def create_confirm
     if params.key?('reset')
       return respond_to do |format|
-        format.html { redirect_to(new_<%= file_name %>_path) }
+        format.html { redirect_to(new_<%= singular_path %>_url) }
         format.xml  { head :ok }
       end
     end
 
-    @<%= file_name %> = <%= class_name %>.new(params[:<%= file_name %>])
+    @<%= singular_name %> = <%= class_name %>.new(params[:<%= table_name.singularize %>])
 
     respond_to do |format|
-      if @<%= file_name %>.valid?
+      if @<%= singular_name %>.valid?
         format.html # create_confirm.html.erb
-        format.xml  { render :xml => @<%= file_name %> }
+        format.xml  { render :xml => @<%= singular_name %> }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @<%= singular_name %>.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # POST /<%= table_name %>
-  # POST /<%= table_name %>.xml
+  # POST /<%= plural_path %>
+  # POST /<%= plural_path %>.xml
   def create
-    @<%= file_name %> = <%= class_name %>.new(params[:<%= file_name %>])
+    @<%= singular_name %> = <%= class_name %>.new(params[:<%= table_name.singularize %>])
 
     respond_to do |format|
-      if ! params.key?('edit') && @<%= file_name %>.save
+      if ! params.key?('edit') && @<%= singular_name %>.save
         flash[:notice] = '<%= class_name %> was successfully created.'
-        format.html { redirect_to(@<%= file_name %>) }
-        format.xml  { render :xml => @<%= file_name %>, :status => :created, :location => @<%= file_name %> }
+        format.html { redirect_to(<%= singular_path %>_url(@<%= singular_name %>)) }
+        format.xml  { render :xml => @<%= singular_name %>, :status => :created, :location => @<%= singular_name %> }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @<%= singular_name %>.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # POST /<%= table_name %>/update_confirm
-  # POST /<%= table_name %>/update_confirm.xml
+  # POST /<%= plural_path %>/update_confirm
+  # POST /<%= plural_path %>/update_confirm.xml
   def update_confirm
-    @<%= file_name %> = <%= class_name %>.find(params[:id])
+    @<%= singular_name %> = <%= class_name %>.find(params[:id])
     if params.key?('reset')
       return respond_to do |format|
-        format.html { redirect_to(edit_<%= file_name %>_path(@<%= file_name %>)) }
+        format.html { redirect_to(edit_<%= singular_path %>_url(@<%= singular_name %>)) }
         format.xml  { head :ok }
       end
     end
 
-    @<%= file_name %>.attributes = params[:<%= file_name %>]
+    @<%= singular_name %>.attributes = params[:<%= table_name.singularize %>]
 
     respond_to do |format|
-      if @<%= file_name %>.valid?
+      if @<%= singular_name %>.valid?
         format.html # edit_confirm.html.erb
-        format.xml  { render :xml => @<%= file_name %> }
+        format.xml  { render :xml => @<%= singular_name %> }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @<%= singular_name %>.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # PUT /<%= table_name %>/1
-  # PUT /<%= table_name %>/1.xml
+  # PUT /<%= plural_path %>/1
+  # PUT /<%= plural_path %>/1.xml
   def update
-    @<%= file_name %> = <%= class_name %>.find(params[:id])
-    @<%= file_name %>.attributes = params[:<%= file_name %>]
+    @<%= singular_name %> = <%= class_name %>.find(params[:id])
+    @<%= singular_name %>.attributes = params[:<%= table_name.singularize %>]
 
     respond_to do |format|
-      if ! params.key?('edit') && @<%= file_name %>.save
+      if ! params.key?('edit') && @<%= singular_name %>.save
         flash[:notice] = '<%= class_name %> was successfully updated.'
-        format.html { redirect_to(@<%= file_name %>) }
+        format.html { redirect_to(<%= singular_path %>_url(@<%= singular_name %>)) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @<%= file_name %>.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @<%= singular_name %>.errors, :status => :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /<%= table_name %>/1
-  # DELETE /<%= table_name %>/1.xml
+  # DELETE /<%= plural_path %>/1
+  # DELETE /<%= plural_path %>/1.xml
   def destroy
-    @<%= file_name %> = <%= class_name %>.find(params[:id])
-    @<%= file_name %>.destroy
+    @<%= singular_name %> = <%= class_name %>.find(params[:id])
+    @<%= singular_name %>.destroy
 
     respond_to do |format|
-      format.html { redirect_to(<%= table_name %>_url) }
+      format.html { redirect_to(<%= plural_path %>_url) }
       format.xml  { head :ok }
     end
   end

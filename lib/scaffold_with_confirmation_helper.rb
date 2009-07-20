@@ -16,9 +16,9 @@ module ScaffoldWithConfirmationHelper
       ActionController::RecordIdentifier.singular_class_name(object.class)
 
     if object.new_record?
-      options.merge!(:url => __send__("create_confirm_#{class_name}_path"))
+      options[:url] ||= url_for(:action => 'create_confirm')
     else
-      options.merge!(:url => __send__("update_confirm_#{class_name}_path", object))
+      options[:url] ||= url_for(:action => 'update_confirm', :id => object)
     end
     args << options
 
@@ -31,16 +31,25 @@ module ScaffoldWithConfirmationHelper
   def confirm_for(record_or_name_or_array, *args, &proc)
     raise ArgumentError, "Missing block" unless block_given?
     options = args.extract_options!
-    args << options.merge(:builder => ConfirmBuilder)
+    options[:builder] ||= ConfirmBuilder
 
     case record_or_name_or_array
     when String, Symbol
       object_name = record_or_name_or_array
+      object = args.first
     else
+      object = record_or_name_or_array
       object_name = ActionController::RecordIdentifier.singular_class_name(
-        record_or_name_or_array
+        object
       )
     end
+
+    if object.new_record?
+      options[:url] ||= url_for(:action => 'create')
+    else
+      options[:url] ||= url_for(:action => 'update', :id => object)
+    end
+    args << options
 
     original_form_for(record_or_name_or_array, *args) {|f|
       params[object_name.to_sym].each {|k,v|
