@@ -1,6 +1,8 @@
 class <%= controller_class_name %>Controller < ApplicationController
+  <% if ! options[:skip_confirmation] %>
   helper ScaffoldWithConfirmationHelper
 
+  <% end %>
   # GET /<%= plural_path %>
   # GET /<%= plural_path %>.xml
   def index
@@ -38,6 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
   def edit
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
   end
+  <% if ! options[:skip_confirmation] %>
 
   # POST /<%= plural_path %>/create_confirm
   # POST /<%= plural_path %>/create_condirm.xml
@@ -62,6 +65,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
   end
 
+  <% end %>
   # POST /<%= plural_path %>
   # POST /<%= plural_path %>.xml
   def create
@@ -78,6 +82,7 @@ class <%= controller_class_name %>Controller < ApplicationController
       end
     end
   end
+  <% if ! options[:skip_confirmation] %>
 
   # POST /<%= plural_path %>/update_confirm
   # POST /<%= plural_path %>/update_confirm.xml
@@ -103,6 +108,7 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
   end
 
+  <% end %>
   # PUT /<%= plural_path %>/1
   # PUT /<%= plural_path %>/1.xml
   def update

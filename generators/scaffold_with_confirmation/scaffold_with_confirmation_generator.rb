@@ -4,9 +4,14 @@ module Rails
 
       module MakeRouteAdd
         def make_route_add(resource_list)
+          resources_method = 'resources'
+          if ! options[:skip_confirmation]
+            resources_method = 'resources_with_confirmation'
+          end
+
           ns = (namespace || []).reverse
-          route_add = "  " * (ns.size+1) + "map.resources_with_confirmation #{resource_list}"
-          route_add_log = "map.resources_with_confirmation #{resource_list}"
+          route_add = "  " * (ns.size+1) + "map.#{resources_method} #{resource_list}"
+          route_add_log = "map.#{resources_method} #{resource_list}"
           while ns.any?
             n = ns.shift.underscore
             route_add =
@@ -67,7 +72,7 @@ module Rails
 end
 
 class ScaffoldWithConfirmationGenerator < Rails::Generator::NamedBase
-  default_options :skip_timestamps => false, :skip_migration => false, :force_plural => false, :namespace => nil
+  default_options :skip_timestamps => false, :skip_migration => false, :force_plural => false, :namespace => nil, :skip_confirmation => false
 
   attr_reader   :controller_name,
                 :controller_class_path,
@@ -194,14 +199,26 @@ class ScaffoldWithConfirmationGenerator < Rails::Generator::NamedBase
 
       opt.on("--namespace [Namespace]",
              "Set namespace") { |v| options[:namespace] = v }
+      opt.on("--skip-confirmation",
+             "Don't generate confirmation page") { |v| options[:skip_confirmation] = v }
     end
 
     def scaffold_views
-      %w[ index show new create_confirm edit update_confirm ]
+      views = %w[ index show new edit ]
+      if ! options[:skip_confirmation]
+        views += %w[ create_confirm update_confirm ]
+      end
+
+      views
     end
 
     def partials
-      %w[ form confirm ]
+      partials = %w[ form ]
+      if ! options[:skip_confirmation]
+        partials += %w[ confirm ]
+      end
+
+      partials
     end
 
     def model_name

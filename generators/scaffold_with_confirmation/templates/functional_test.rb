@@ -11,6 +11,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
     get :new
     assert_response :success
   end
+  <% if ! options[:skip_confirmation] %>
 
   test "should get create confirm" do
     post :create_confirm, :<%= table_name.singularize %> => { }
@@ -23,6 +24,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
     assert_redirected_to new_<%= singular_path %>_url
   end
 
+  <% end %>
   test "should create <%= file_name %>" do
     assert_difference('<%= class_name %>.count') do
       post :create, :<%= table_name.singularize %> => { }
@@ -30,6 +32,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
 
     assert_redirected_to <%= singular_path %>_url(assigns(:<%= singular_name %>))
   end
+  <% if ! options[:skip_confirmation] %>
 
   test "should reedit new <%= file_name %>" do
     post :create, :<%= table_name.singularize %> => { }, :edit => true
@@ -37,6 +40,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
     assert_not_nil assigns(:<%= singular_name %>)
   end
 
+  <% end %>
   test "should show <%= file_name %>" do
     get :show, :id => <%= plural_name %>(:one).to_param
     assert_response :success
@@ -46,6 +50,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
     get :edit, :id => <%= plural_name %>(:one).to_param
     assert_response :success
   end
+  <% if ! options[:skip_confirmation] %>
 
   test "should get update confirm" do
     put :update_confirm, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }
@@ -58,10 +63,12 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
     assert_redirected_to edit_<%= singular_path %>_url(assigns(:<%= singular_name %>))
   end
 
+  <% end %>
   test "should update <%= file_name %>" do
     put :update, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }
     assert_redirected_to <%= singular_path %>_url(assigns(:<%= singular_name %>))
   end
+  <% if ! options[:skip_confirmation] %>
 
   test "should reedit update <%= file_name %>" do
     put :update, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }, :edit => true
@@ -69,6 +76,7 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
     assert_not_nil assigns(:<%= singular_name %>)
   end
 
+  <% end %>
   test "should destroy <%= file_name %>" do
     assert_difference('<%= class_name %>.count', -1) do
       delete :destroy, :id => <%= plural_name %>(:one).to_param

@@ -3,8 +3,12 @@
 <%% form_for(@<%= singular_name %>) do |f| %>
   <%%= render :partial => f %>
   <p>
+<% if ! options[:skip_confirmation] %>
     <%%= f.submit 'Confirm' %>
     <%%= f.reset 'Reset' %>
+<% else %>
+    <%%= f.submit 'Update' %>
+<% end -%>
   </p>
 <%% end %>
 
