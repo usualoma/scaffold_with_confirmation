@@ -42,9 +42,9 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
   <% if ! options[:skip_confirmation] %>
 
-  # POST /<%= plural_path %>/create_confirm
-  # POST /<%= plural_path %>/create_condirm.xml
-  def create_confirm
+  # POST /<%= plural_path %>/preview
+  # POST /<%= plural_path %>/preview.xml
+  def preview_creation
     if params.key?('reset')
       return respond_to do |format|
         format.html { redirect_to(new_<%= singular_path %>_url) }
@@ -56,7 +56,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
     respond_to do |format|
       if @<%= singular_name %>.valid?
-        format.html # create_confirm.html.erb
+        format.html # preview_creation.html.erb
         format.xml  { render :xml => @<%= singular_name %> }
       else
         format.html { render :action => "new" }
@@ -84,9 +84,9 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
   <% if ! options[:skip_confirmation] %>
 
-  # POST /<%= plural_path %>/update_confirm
-  # POST /<%= plural_path %>/update_confirm.xml
-  def update_confirm
+  # POST /<%= plural_path %>/preview
+  # POST /<%= plural_path %>/preview.xml
+  def preview_update
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
     if params.key?('reset')
       return respond_to do |format|

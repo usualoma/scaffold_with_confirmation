@@ -206,7 +206,7 @@ class ScaffoldWithConfirmationGenerator < Rails::Generator::NamedBase
     def scaffold_views
       views = %w[ index show new edit ]
       if ! options[:skip_confirmation]
-        views += %w[ create_confirm update_confirm ]
+        views += %w[ preview_creation preview_update ]
       end
 
       views

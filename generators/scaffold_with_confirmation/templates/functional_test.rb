@@ -14,13 +14,13 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
   <% if ! options[:skip_confirmation] %>
 
   test "should get create confirm" do
-    post :create_confirm, :<%= table_name.singularize %> => { }
+    post :preview_creation, :<%= table_name.singularize %> => { }
     assert_response :success
     assert_not_nil assigns(:<%= singular_name %>)
   end
 
   test "should reset new <%= file_name %>" do
-    post :create_confirm, :<%= table_name.singularize %> => { }, :reset => true
+    post :preview_creation, :<%= table_name.singularize %> => { }, :reset => true
     assert_redirected_to new_<%= singular_path %>_url
   end
 
@@ -53,13 +53,13 @@ class <%= controller_class_name %>ControllerTest < ActionController::TestCase
   <% if ! options[:skip_confirmation] %>
 
   test "should get update confirm" do
-    put :update_confirm, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }
+    put :preview_update, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }
     assert_response :success
     assert_not_nil assigns(:<%= singular_name %>)
   end
 
   test "should reset update <%= file_name %>" do
-    put :update_confirm, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }, :reset => true
+    put :preview_update, :id => <%= plural_name %>(:one).to_param, :<%= table_name.singularize %> => { }, :reset => true
     assert_redirected_to edit_<%= singular_path %>_url(assigns(:<%= singular_name %>))
   end
 

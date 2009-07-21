@@ -16,9 +16,9 @@ module ScaffoldWithConfirmationHelper
       ActionController::RecordIdentifier.singular_class_name(object.class)
 
     if object.new_record?
-      options[:url] ||= url_for(:action => 'create_confirm')
+      options[:url] ||= url_for(:action => :preview_creation)
     else
-      options[:url] ||= url_for(:action => 'update_confirm', :id => object)
+      options[:url] ||= url_for(:action => :preview_update, :id => object)
     end
     args << options
 
