@@ -84,8 +84,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
   <% if ! options[:skip_confirmation] %>
 
-  # POST /<%= plural_path %>/preview
-  # POST /<%= plural_path %>/preview.xml
+  # POST /<%= plural_path %>/1/preview
+  # POST /<%= plural_path %>/1/preview.xml
   def preview_update
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
     if params.key?('reset')
