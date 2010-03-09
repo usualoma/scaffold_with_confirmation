@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
-describe "/<%= table_name %>/new.<%= default_file_extension %>" do
+describe "/<%= plural_web_path %>/new.<%= default_file_extension %>" do
   include <%= controller_class_name %>Helper
 
   before(:each) do
@@ -20,7 +20,7 @@ describe "/<%= table_name %>/new.<%= default_file_extension %>" do
     render
     <% end %>
 
-    response.should have_tag("form[action=?][method=post]", preview_<%= file_name %>_path) do
+    response.should have_tag("form[action=?][method=post]", url_for(:action => :preview_creation)) do
 <% for attribute in output_attributes -%>
       with_tag("<%= attribute.input_type -%>#<%= file_name %>_<%= attribute.name %>[name=?]", "<%= file_name %>[<%= attribute.name %>]")
 <% end -%>

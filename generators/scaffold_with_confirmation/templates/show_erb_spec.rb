@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 <% output_attributes = attributes.reject{|attribute| [:datetime, :timestamp, :time, :date].index(attribute.type) } -%>
-describe "/<%= table_name %>/show.<%= default_file_extension %>" do
+describe "/<%= plural_web_path %>/show.<%= default_file_extension %>" do
   include <%= controller_class_name %>Helper
   before(:each) do
     assigns[:<%= file_name %>] = @<%= file_name %> = stub_model(<%= class_name %><%= output_attributes.empty? ? ')' : ',' %>

@@ -87,6 +87,7 @@ class ScaffoldWithConfirmationGenerator < Rails::Generator::NamedBase
                 :controller_plural_name,
                 :singular_path,
                 :plural_path,
+                :plural_web_path,
                 :namespace,
                 :default_file_extension
   alias_method  :controller_file_name,  :controller_underscore_name
@@ -131,7 +132,10 @@ class ScaffoldWithConfirmationGenerator < Rails::Generator::NamedBase
 
       path_prefix = @controller_class_path.join('_')
       @plural_path = path_prefix + '_' + @plural_path
+      @plural_web_path = @plural_path.sub('_', '/')
       @singular_path = path_prefix + '_' + @singular_path
+    else
+      @plural_web_path = @plural_path
     end
 
     @default_file_extension = "html.erb"

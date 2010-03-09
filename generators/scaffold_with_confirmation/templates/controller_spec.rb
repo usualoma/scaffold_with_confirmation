@@ -38,6 +38,34 @@ describe <%= controller_class_name %>Controller do
     end
   end
 
+  describe "POST preview_creation" do
+
+    describe "with valid params" do
+      it "assigns a <%= file_name %> as @<%= file_name %>" do
+        <%= class_name %>.stub(:new).with({'these' => 'params'}).and_return(mock_<%= file_name %>(:valid? => true))
+        post :preview_creation, :<%= file_name %> => {:these => 'params'}
+        assigns[:<%= file_name %>].should == mock_<%= file_name %>
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a <%= file_name %> as @<%= file_name %>" do
+        <%= class_name %>.stub(:new).with({'these' => 'params'}).and_return(mock_<%= file_name %>(:valid? => false))
+        post :preview_creation, :<%= file_name %> => {:these => 'params'}
+        assigns[:<%= file_name %>].should equal(mock_<%= file_name %>)
+        response.should render_template('new')
+      end
+    end
+
+    describe "resetting" do
+      it "redirect" do
+        post :preview_creation, :reset => true, :<%= file_name %> => {:these => 'params'}
+        response.should redirect_to(new_<%= singular_path %>_url)
+      end
+    end
+
+  end
+
   describe "POST create" do
 
     describe "with valid params" do
@@ -50,7 +78,7 @@ describe <%= controller_class_name %>Controller do
       it "redirects to the created <%= file_name %>" do
         <%= class_name %>.stub(:new).and_return(mock_<%= file_name %>(:save => true))
         post :create, :<%= file_name %> => {}
-        response.should redirect_to(<%= table_name.singularize %>_url(mock_<%= file_name %>))
+        response.should redirect_to(<%= singular_path %>_url(mock_<%= file_name %>))
       end
     end
 
@@ -65,6 +93,39 @@ describe <%= controller_class_name %>Controller do
         <%= class_name %>.stub(:new).and_return(mock_<%= file_name %>(:save => false))
         post :create, :<%= file_name %> => {}
         response.should render_template('new')
+      end
+    end
+
+  end
+
+  describe "POST preview_update" do
+
+    describe "with valid params" do
+      it "assigns a <%= file_name %> as @<%= file_name %>" do
+        <%= class_name %>.should_receive(:find).with("37").and_return(mock_<%= file_name %>)
+        mock_<%= file_name %>.should_receive(:attributes=).with({'these' => 'params'})
+        mock_<%= file_name %>.should_receive(:valid?).and_return(true)
+        post :preview_update, :id => "37", :<%= file_name %> => {:these => 'params'}
+        assigns[:<%= file_name %>].should equal(mock_<%= file_name %>)
+      end
+    end
+
+    describe "with invalid params" do
+      it "assigns a <%= file_name %> as @<%= file_name %>" do
+        <%= class_name %>.should_receive(:find).with("37").and_return(mock_<%= file_name %>)
+        mock_<%= file_name %>.should_receive(:attributes=).with({'these' => 'params'})
+        mock_<%= file_name %>.should_receive(:valid?).and_return(false)
+        post :preview_update, :id => "37", :<%= file_name %> => {:these => 'params'}
+        response.should render_template('edit')
+        assigns[:<%= file_name %>].should == mock_<%= file_name %>
+      end
+    end
+
+    describe "resetting" do
+      it "redirect" do
+        <%= class_name %>.should_receive(:find).with("37").and_return(mock_<%= file_name %>)
+        post :preview_update, :reset => true, :id => "37", :<%= file_name %> => {:these => 'params'}
+        response.should redirect_to(edit_<%= singular_path %>_url(mock_<%= file_name %>))
       end
     end
 
@@ -91,7 +152,7 @@ describe <%= controller_class_name %>Controller do
         <%= class_name %>.stub(:find).and_return(mock_<%= file_name %>(:attributes= => true))
         mock_<%= file_name %>.should_receive(:save).and_return(true)
         put :update, :id => "1"
-        response.should redirect_to(<%= table_name.singularize %>_url(mock_<%= file_name %>))
+        response.should redirect_to(<%= singular_path %>_url(mock_<%= file_name %>))
       end
     end
 
@@ -150,7 +211,7 @@ describe <%= controller_class_name %>Controller do
     it "redirects to the <%= table_name %> list" do
       <%= class_name %>.stub(:find).and_return(mock_<%= file_name %>(:destroy => true))
       delete :destroy, :id => "1"
-      response.should redirect_to(<%= table_name %>_url)
+      response.should redirect_to(<%= plural_path %>_url)
     end
   end
 

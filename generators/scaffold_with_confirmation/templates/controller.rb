@@ -3,8 +3,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   helper ScaffoldWithConfirmationHelper
 
   <% end %>
-  # GET /<%= plural_path %>
-  # GET /<%= plural_path %>.xml
+  # GET /<%= plural_web_path %>
+  # GET /<%= plural_web_path %>.xml
   def index
     @<%= plural_name %> = <%= class_name %>.all
 
@@ -14,8 +14,8 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
   end
 
-  # GET /<%= plural_path %>/1
-  # GET /<%= plural_path %>/1.xml
+  # GET /<%= plural_web_path %>/1
+  # GET /<%= plural_web_path %>/1.xml
   def show
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
 
@@ -25,8 +25,8 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
   end
 
-  # GET /<%= plural_path %>/new
-  # GET /<%= plural_path %>/new.xml
+  # GET /<%= plural_web_path %>/new
+  # GET /<%= plural_web_path %>/new.xml
   def new
     @<%= singular_name %> = <%= class_name %>.new
 
@@ -36,14 +36,14 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
   end
 
-  # GET /<%= plural_path %>/1/edit
+  # GET /<%= plural_web_path %>/1/edit
   def edit
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
   end
   <% if ! options[:skip_confirmation] %>
 
-  # POST /<%= plural_path %>/preview
-  # POST /<%= plural_path %>/preview.xml
+  # POST /<%= plural_web_path %>/preview
+  # POST /<%= plural_web_path %>/preview.xml
   def preview_creation
     if params.key?('reset')
       return respond_to do |format|
@@ -66,8 +66,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   <% end %>
-  # POST /<%= plural_path %>
-  # POST /<%= plural_path %>.xml
+  # POST /<%= plural_web_path %>
+  # POST /<%= plural_web_path %>.xml
   def create
     @<%= singular_name %> = <%= class_name %>.new(params[:<%= table_name.singularize %>])
 
@@ -84,8 +84,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
   <% if ! options[:skip_confirmation] %>
 
-  # POST /<%= plural_path %>/1/preview
-  # POST /<%= plural_path %>/1/preview.xml
+  # POST /<%= plural_web_path %>/1/preview
+  # POST /<%= plural_web_path %>/1/preview.xml
   def preview_update
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
     if params.key?('reset')
@@ -109,8 +109,8 @@ class <%= controller_class_name %>Controller < ApplicationController
   end
 
   <% end %>
-  # PUT /<%= plural_path %>/1
-  # PUT /<%= plural_path %>/1.xml
+  # PUT /<%= plural_web_path %>/1
+  # PUT /<%= plural_web_path %>/1.xml
   def update
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
     @<%= singular_name %>.attributes = params[:<%= table_name.singularize %>]
@@ -127,8 +127,8 @@ class <%= controller_class_name %>Controller < ApplicationController
     end
   end
 
-  # DELETE /<%= plural_path %>/1
-  # DELETE /<%= plural_path %>/1.xml
+  # DELETE /<%= plural_web_path %>/1
+  # DELETE /<%= plural_web_path %>/1.xml
   def destroy
     @<%= singular_name %> = <%= class_name %>.find(params[:id])
     @<%= singular_name %>.destroy
