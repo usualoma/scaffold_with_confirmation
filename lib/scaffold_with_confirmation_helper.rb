@@ -15,10 +15,12 @@ module ScaffoldWithConfirmationHelper
     class_name =
       ActionController::RecordIdentifier.singular_class_name(object.class)
 
-    if object.new_record?
-      options[:url] ||= url_for(:action => :preview_creation)
-    else
-      options[:url] ||= url_for(:action => :preview_update, :id => object)
+    if object.kind_of?(ActiveRecord::Base)
+      if object.new_record?
+        options[:url] ||= url_for(:action => :preview_creation)
+      else
+        options[:url] ||= url_for(:action => :preview_update, :id => object)
+      end
     end
     args << options
 
@@ -44,16 +46,28 @@ module ScaffoldWithConfirmationHelper
       )
     end
 
-    if object.new_record?
-      options[:url] ||= url_for(:action => 'create')
-    else
-      options[:url] ||= url_for(:action => 'update', :id => object)
+    if object.kind_of?(ActiveRecord::Base)
+      if object.new_record?
+        options[:url] ||= url_for(:action => 'create')
+      else
+        options[:url] ||= url_for(:action => 'update', :id => object)
+      end
     end
     args << options
 
     original_form_for(record_or_name_or_array, *args) {|f|
       params[object_name.to_sym].each {|k,v|
-        concat(%Q(<input type="hidden" name="#{object_name}[#{k}]" value="#{h v}" />))
+        if v.instance_of?(Array)
+          v.each_with_index do |v, i|
+            concat(%Q(<input type="hidden" name="#{object_name}[#{k}][#{i}]" value="#{h v}" />))
+          end
+        elsif v.instance_of?(Hash) || v.instance_of?(HashWithIndifferentAccess)
+          v.each do |hk, v|
+            concat(%Q(<input type="hidden" name="#{object_name}[#{k}][#{hk}]" value="#{h v}" />))
+          end
+        else
+          concat(%Q(<input type="hidden" name="#{object_name}[#{k}]" value="#{h v}" />))
+        end
       }
       proc.call f
     }

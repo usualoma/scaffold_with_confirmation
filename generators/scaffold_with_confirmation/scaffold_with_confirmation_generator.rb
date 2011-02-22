@@ -130,9 +130,10 @@ class ScaffoldWithConfirmationGenerator < Rails::Generator::NamedBase
           n.camelize
         end.join('::')
 
+      @plural_web_path = @controller_class_path.join('/') + '/' + @plural_path
+
       path_prefix = @controller_class_path.join('_')
       @plural_path = path_prefix + '_' + @plural_path
-      @plural_web_path = @plural_path.sub('_', '/')
       @singular_path = path_prefix + '_' + @singular_path
     else
       @plural_web_path = @plural_path
