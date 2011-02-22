@@ -9,19 +9,19 @@ Usage
 
 1. Install plugin.
 
-  ruby script/plugin install git://github.com/usualoma/scaffold_with_confirmation.git
+  rails plugin install git://github.com/usualoma/scaffold_with_confirmation.git
 
 2. Generate model.
 
-  ruby script/generate ModelName [ field ... ]
+  rails generate ModelName [ field:type ... ]
 
 
 Example
 =======
 
-  ruby script/generate scaffold post
-  ruby script/generate scaffold post title:string body:text published:boolean
-  ruby script/generate scaffold purchase order_id:integer amount:decimal
+  rails generate scaffold post
+  rails generate scaffold post title:string body:text published:boolean
+  rails generate scaffold purchase order_id:integer amount:decimal
 
 
-Copyright (c) 2009 ToI Planning, released under the MIT license
+Copyright (c) 2011 ToI Inc., released under the MIT license

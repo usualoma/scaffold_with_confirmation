@@ -1,0 +1,12 @@
+<%%= confirm_for(@<%= singular_table_name %>) do |f| %>
+<% for attribute in attributes -%>
+  <div class="field">
+    <%%= f.label :<%= attribute.name %> %><br />
+    <%%= f.value :<%= attribute.name %> %>
+  </div>
+<% end -%>
+  <div class="actions">
+    <%%= f.submit %>
+    <%%= f.edit 'Edit' %>
+  </div>
+<%% end %>
