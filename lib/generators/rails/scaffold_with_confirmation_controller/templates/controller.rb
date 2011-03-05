@@ -59,9 +59,10 @@ class <%= controller_class_name %>Controller < ApplicationController
   # PUT <%= route_url %>/1.xml
   def update
     @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
+    @<%= singular_table_name %>.attributes = <%= "params[:#{singular_table_name}]" %>
 
     respond_to do |format|
-      if ! params.key?('edit') && @<%= orm_instance.update_attributes("params[:#{singular_table_name}]") %>
+      if ! params.key?('edit') && @<%= orm_instance.save %>
         format.html { redirect_to(@<%= singular_table_name %>, :notice => '<%= human_name %> was successfully updated.') }
         format.xml  { head :ok }
       else
